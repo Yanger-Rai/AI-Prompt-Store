@@ -22,7 +22,13 @@ const OtherProfile = ({ params }) => {
     if (userName) fetchPosts();
   }, []);
 
-  return <Profile name={userName} desc="Feed yourself :)" data={posts} />;
+  return (
+    <Profile
+      name={userName}
+      desc={`Welcome to ${userName}'s profile. Explore and be inspire!`}
+      data={posts}
+    />
+  );
 };
 
 export default OtherProfile;
