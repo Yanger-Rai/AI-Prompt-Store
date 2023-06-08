@@ -28,6 +28,7 @@ const Feed = () => {
   const handleTagClick = (e) => {
     setSearchText(e);
   };
+
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch("/api/prompt");
@@ -48,7 +49,7 @@ const Feed = () => {
       <form className="relative w-full flex-center">
         <input
           type="text"
-          placeholder="Search for a tag or a username"
+          placeholder="Search for a tag or keyword"
           value={searchText}
           onChange={handleSearchChange}
           required

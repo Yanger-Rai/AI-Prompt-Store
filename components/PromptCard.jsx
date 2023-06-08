@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -11,6 +11,15 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const router = useRouter();
 
   const [copied, setCopied] = useState("");
+  const [tags, setTags] = useState("");
+
+  useEffect(() => {
+    if (!post.tag.includes(",")) return setTags(`#${post.tag}`);
+
+    const tagArray = post.tag.split(",");
+    const formattedTags = tagArray.map((tag) => `#${tag}`).join(", ");
+    setTags(formattedTags);
+  }, []);
 
   const handleCopy = () => {
     setCopied(post.prompt);
@@ -61,11 +70,12 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         </div>
       </div>
       <p className="my-4 font-sathosi text-sm">{post.prompt}</p>
+
       <p
         className="font-inter text-sm blue_gradient cursor-pointer"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
-        #{post.tag}
+        {tags}
       </p>
       {session?.user.id === post.creator._id && pathName === "/profile" && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
